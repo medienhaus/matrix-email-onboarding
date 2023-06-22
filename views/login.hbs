@@ -1,0 +1,22 @@
+{{> header }}
+
+<main>
+    <section class="login">
+        <p>This invitation is valid for: {{#each namesOfRooms}}<strong>{{ this }}</strong>, {{/each}}</p>
+        <p>❗️ Please log in to your account to accept the invitation.</p>
+        <hr>
+        <form method="POST">
+            <div>
+                <label for="username">username</label>
+                <input name="username" type="text" placeholder="u.name">
+            </div>
+            <div>
+                <label for="password">password</label>
+                <input name="password" type="password" placeholder="••••••••••••••••••••••••">
+            </div>
+            <button name="submit" type="submit">LOGIN</button>
+        </form>
+    </section>
+</main>
+
+{{> footer }}

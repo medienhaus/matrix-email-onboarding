@@ -1,0 +1,43 @@
+{
+  "name": "nest-babel-starter",
+  "version": "1.0.0",
+  "description": "Nest Babel starter repository",
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier --write \"**/*.js\"",
+    "start": "babel-node index.js",
+    "start:dev": "nodemon",
+    "cli": "babel-node cli.js"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^2.1.1",
+    "@nestjs/common": "^9.4.3",
+    "@nestjs/config": "^3.0.0",
+    "@nestjs/core": "^9.4.3",
+    "@nestjs/platform-express": "^9.0.0",
+    "csv-parse": "^5.4.0",
+    "eciesjs": "^0.3.17",
+    "hbs": "^4.2.0",
+    "inquirer": "^8.2.5",
+    "is-email": "^1.0.2",
+    "lodash": "^4.17.21",
+    "matrix-js-sdk": "^26.0.1",
+    "nest-commander": "^3.8.0",
+    "nodemailer": "^6.9.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/node": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/register": "^7.18.6",
+    "@babel/runtime": "^7.18.6",
+    "@nestjs/testing": "^9.0.0",
+    "eslint": "^8.42.0",
+    "eslint-plugin-lodash": "^7.4.0",
+    "eslint-plugin-matrix-org": "^1.2.0",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
+  }
+}
