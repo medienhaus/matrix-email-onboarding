@@ -16,6 +16,10 @@ export class AppController {
     @Get()
     @Bind(Query('t'), Response())
     root(token, response) {
+        if (!token) {
+            return response.render('invalidToken');
+        }
+
         const invitations = this.appService.findInvitations(token);
 
         if (_.size(invitations) < 1) {
