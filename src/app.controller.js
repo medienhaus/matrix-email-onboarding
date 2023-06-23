@@ -1,13 +1,16 @@
 import { Get, Controller, Bind, Query, Dependencies, Response, Post, Body, Render } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import _ from 'lodash';
+import hbs from 'hbs';
 
 import { AppService } from './app.service';
 
 @Controller()
-@Dependencies(AppService)
+@Dependencies(AppService, ConfigService)
 export class AppController {
-    constructor(appService) {
+    constructor(appService, configService) {
         this.appService = appService;
+        hbs.registerHelper('config', (variable) => configService.get(variable))
     }
 
     @Get()
