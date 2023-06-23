@@ -1,6 +1,9 @@
-🖤 Questions? Ideas? Feedback? Discuss your feedback with us: [#matrix-email-onboarding:medienhaus.dev](https://matrix.to/#/#matrix-email-onboarding:medienhaus.dev)
+<br>
 
-<br><hr><br>
+🖤 Questions? Ideas? We'd love to hear your feedback: [#matrix-email-onboarding:medienhaus.dev](https://matrix.to/#/#matrix-email-onboarding:medienhaus.dev)
+
+<hr>
+<br>
 
 # matrix-email-onboarding
 
@@ -60,9 +63,11 @@ Written in JavaScript with the [NestJS](https://github.com/nestjs/nest) framewor
 
 <br>
 
----
+## License
 
-<br>
+<a href="LICENSE"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/cc-zero.svg" /></a>
+
+<br><br><br><br><br><br>
 
 Public money, public code. The development of this project was funded and supported by public institutions. The code was written and is being maintained by **medienhaus/** and our friends.
 
