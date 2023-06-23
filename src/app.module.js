@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import configuration from '../config';
 import { MatrixService } from '../lib/matrix.service';
+import configuration from '../config';
 
 @Module({
     imports: [

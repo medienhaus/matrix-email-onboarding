@@ -1,10 +1,9 @@
 {
-  "name": "nest-babel-starter",
+  "name": "matrix-email-onboarding",
   "version": "1.0.0",
-  "description": "Nest Babel starter repository",
-  "license": "MIT",
+  "description": "Microservice to invite moderators to Matrix rooms (or spaces) via their email addresses, even before they might have a Matrix account",
+  "license": "CC0-1.0",
   "scripts": {
-    "format": "prettier --write \"**/*.js\"",
     "start": "babel-node index.js",
     "start:dev": "nodemon",
     "cli": "babel-node cli.js"
