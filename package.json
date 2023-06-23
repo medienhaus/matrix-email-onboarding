@@ -17,7 +17,6 @@
     "csv-parse": "^5.4.0",
     "eciesjs": "^0.3.17",
     "hbs": "^4.2.0",
-    "inquirer": "^8.2.5",
     "is-email": "^1.0.2",
     "lodash": "^4.17.21",
     "matrix-js-sdk": "^26.0.1",
