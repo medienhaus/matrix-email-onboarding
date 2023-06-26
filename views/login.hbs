@@ -2,7 +2,7 @@
 
 <main>
     <section class="login">
-        <p>This invitation is valid for: {{#each namesOfRooms}}<strong>{{ this }}</strong>, {{/each}}</p>
+        <p>This invitation is valid for: {{#each namesOfRooms}}<strong>{{ this }}</strong>{{#unless @last}}, {{/unless}}{{/each}}</p>
         <p>❗️ Please log in to your account to accept the invitation.</p>
         <hr>
         <form method="POST">
