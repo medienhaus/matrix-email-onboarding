@@ -15,8 +15,12 @@ export class AppController {
 
     @Get()
     @Bind(Query('t'), Response())
+    /**
+     * @param {string} token
+     * @param {Response} response
+     */
     root(token, response) {
-        if (!token) {
+        if (!token || token.length !== 66) {
             return response.render('invalidToken');
         }
 
