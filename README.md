@@ -45,6 +45,9 @@ You can make use the following environment variables to adjust your deployment:
 
 **send-emails** - Sends out one email per unique email address in a given `.csv` file, and adds one `dev.medienhaus.onboarding` event per email address to each Matrix room/space containing an encrypted identifier unique to the recipient of the email.
 
+<img width="1384" alt="image" src="https://github.com/medienhaus/matrix-email-onboarding/assets/706419/2a8bd954-cbf7-4406-bb78-a4bf669c783a">
+
+
 ```bash
 Usage: npm run cli send-emails -- [options]
 
