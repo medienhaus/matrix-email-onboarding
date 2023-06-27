@@ -85,7 +85,7 @@ export class SendEmailsCommand extends CommandRunner {
 
         // Confirm that the email body looks fine
         this.logger.log(`\n---------------------\n${emailBody}\n---------------------`);
-        if (!(await confirm({ message: 'Does the email body above good to you?' }))) {
+        if (!(await confirm({ message: 'Does the email body above look good to you?' }))) {
             process.exit(1);
         }
 
