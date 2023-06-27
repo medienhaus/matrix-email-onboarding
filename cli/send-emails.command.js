@@ -1,5 +1,5 @@
 import { Command, CommandRunner, InquirerService, Option } from 'nest-commander';
-import { ConsoleLogger, Dependencies, Logger } from '@nestjs/common';
+import { ConsoleLogger, Dependencies } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { parse } from 'csv-parse/sync';
 import _ from 'lodash';
@@ -72,8 +72,16 @@ export class SendEmailsCommand extends CommandRunner {
         // Create reusable transporter object using nodemailer
         const emailTransporter = await this.createMessageTransporter();
 
-        const { baseUrl, emailFrom, emailSubject, matrixHomeserver, matrixAccessToken, matrixUserId } =
-            await this.inquirerService.ask('send-emails', undefined);
+        const {
+            baseUrl,
+            emailFrom,
+            emailSubject,
+            matrixHomeserver,
+            matrixAccessToken,
+            matrixUserId,
+            sleepBetweenMatrixEvents,
+            sleepBetweenEmailSends,
+        } = await this.inquirerService.ask('send-emails', undefined);
 
         // Confirm that the email body looks fine
         this.logger.log(`\n---------------------\n${emailBody}\n---------------------`);
@@ -96,12 +104,14 @@ export class SendEmailsCommand extends CommandRunner {
             process.exit(1);
         }
 
-        _.forEach(mapEmailAddressesToRoomIds, (roomIds, emailTo) => {
+        for (const emailTo in mapEmailAddressesToRoomIds) {
+            const roomIds = mapEmailAddressesToRoomIds[emailTo];
+
             const privateKey = new PrivateKey();
             const publicKey = privateKey.publicKey.toHex();
             const roomNameList = [];
 
-            _.forEach(roomIds, (roomId) => {
+            for (const roomId of roomIds) {
                 // matrixClient check if room exists
                 const room = this.matrixService.getRoom(roomId);
                 if (!room) return;
@@ -109,16 +119,18 @@ export class SendEmailsCommand extends CommandRunner {
                 // matrixClient check if we can access room and are admin
                 const userRoomSignature = encrypt(publicKey, roomId).toString('base64url');
 
-                // matrixClient.sendEventOfOnboarding
                 this.matrixService.sendOnboardingEvent(room.roomId, {
                     signature: userRoomSignature,
                 });
                 this.logger.verbose(
                     `Sent dev.medienhaus.onboarding event for ${emailTo} to ${room.roomId} (${room.name})`,
                 );
-                // matrixClient get Room Name and add to some array
+
                 roomNameList.push(room.name);
-            });
+
+                // Sleep after every time we sent an onboarding event to a room
+                await new Promise((x) => setTimeout(x, sleepBetweenMatrixEvents));
+            }
 
             // send email
             emailTransporter
@@ -133,7 +145,10 @@ export class SendEmailsCommand extends CommandRunner {
                 .then((transporterResponse) => {
                     this.logger.verbose(`Invitation email sent: ${transporterResponse.messageId} to ${emailTo}`);
                 });
-        });
+
+            // Sleep after every email
+            await new Promise((x) => setTimeout(x, sleepBetweenEmailSends));
+        }
     }
 
     async createMessageTransporter() {
@@ -165,7 +180,7 @@ export class SendEmailsCommand extends CommandRunner {
 
         _.forEach(parse(fs.readFileSync(filePath)), (csvLine, index) => {
             // If neither column 1 nor column 2 are a valid email address, we skip it.
-            // Typically this might be the case for the first line if contains headers.
+            // Typically, this might be the case for the first line if contains headers.
             if (!isEmail(csvLine[0]) && !isEmail(csvLine[1])) {
                 this.logger.verbose(`Skipped line ${index} of .csv file (${csvLine.toString()})`);
                 return;

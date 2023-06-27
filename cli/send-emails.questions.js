@@ -42,7 +42,7 @@ export class SendEmailsQuestions {
         return value;
     }
     @DefaultFor({ name: 'emailSubject' })
-    defaultEmailSuject() {
+    defaultEmailSubject() {
         return this.configService.get('email.subject');
     }
 
@@ -86,5 +86,25 @@ export class SendEmailsQuestions {
     })
     defaultMatrixAccessToken() {
         return this.configService.get('matrix.access_token');
+    }
+
+    @Question({
+        name: 'sleepBetweenMatrixEvents',
+        message: 'How many ms should pass between each Matrix call sending a dev.medienhaus.onboarding event?',
+        default: 100,
+        type: 'number',
+    })
+    parseSleepBetweenMatrixEvents(value) {
+        return value;
+    }
+
+    @Question({
+        name: 'sleepBetweenEmailSends',
+        message: 'And how many ms should pass after each email that was sent out?',
+        default: 500,
+        type: 'number',
+    })
+    parseSleepBetweenEmailSends(value) {
+        return value;
     }
 }
