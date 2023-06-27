@@ -16,7 +16,7 @@ async function bootstrap() {
     logger.log(`Booting on port ${port}`)
     if (globalPrefix !== '/') {
         // Ensure we have a leading /, which is important for the `useStaticAssets` method used below
-        if (!_.startsWith('/', globalPrefix)) globalPrefix = '/' + globalPrefix;
+        if (!_.startsWith(globalPrefix, '/')) globalPrefix = '/' + globalPrefix;
         logger.log(`Booting with global prefix "${globalPrefix}"`)
     }
 
