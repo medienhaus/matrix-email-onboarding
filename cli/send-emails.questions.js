@@ -24,7 +24,7 @@ export class SendEmailsQuestions {
 
     @Question({
         name: 'emailFrom',
-        message: 'emailFrom',
+        message: 'What email address should the emails be sent from?',
     })
     parseEmailFrom(value) {
         return value;
@@ -36,7 +36,7 @@ export class SendEmailsQuestions {
 
     @Question({
         name: 'emailSubject',
-        message: 'emailSubject',
+        message: 'What should the subject of the email be?',
     })
     parseEmailSubject(value) {
         return value;
@@ -47,45 +47,7 @@ export class SendEmailsQuestions {
     }
 
     @Question({
-        name: 'smtpHost',
-        message: 'Please provide the SMTP host (e.g. localhost)',
-        default: 'localhost',
-    })
-    parseSmtpHost(value) {
-        return value;
-    }
-
-    @Question({
-        type: 'number',
-        name: 'smtpPort',
-        message: 'Please provide the SMTP port (e.g. 465)',
-        default: '1025',
-    })
-    parseSmtpPort(value) {
-        return value;
-    }
-
-    @Question({
-        name: 'smtpUser',
-        message: 'Please provide the SMTP user (username)',
-        default: 'username',
-    })
-    parseSmtpUser(value) {
-        return value;
-    }
-
-    @Question({
-        type: 'password',
-        name: 'smtpPassword',
-        message: 'Please provide the SMTP password',
-        default: 'pw',
-    })
-    parseSmtpPassword(value) {
-        return value;
-    }
-
-    @Question({
-        message: 'Matrix homeserver',
+        message: 'Please provide your Matrix homeserver URL',
         name: 'matrixHomeserver',
     })
     parseMatrixHomeserver(value) {
@@ -99,7 +61,7 @@ export class SendEmailsQuestions {
     }
 
     @Question({
-        message: 'Matrix userId',
+        message: 'Please provide the user ID for who is going to invite your users & modify their power levels',
         name: 'matrixUserId',
     })
     parseMatrixUserId(value) {
@@ -113,7 +75,7 @@ export class SendEmailsQuestions {
     }
 
     @Question({
-        message: 'Matrix accessToken',
+        message: 'Please provide a valid access token for the previously given Matrix user',
         name: 'matrixAccessToken',
     })
     parseMatrixAccessToken(value) {
