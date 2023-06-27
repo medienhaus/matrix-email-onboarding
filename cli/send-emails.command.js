@@ -38,10 +38,9 @@ export class SendEmailsCommand extends CommandRunner {
             parse(fs.readFileSync(value));
         } catch (error) {
             this.logger.error(
-                'Please provide a valid CSV file containing email addresses and room IDs via -f or --file; trying to parse the file the following error was encountered:',
-                error,
-                error.code,
+                'Please provide a valid CSV file containing email addresses and room IDs via -f or --file',
             );
+            this.logger.debug(error.stack);
             process.exit(1);
         }
 
@@ -57,10 +56,9 @@ export class SendEmailsCommand extends CommandRunner {
             fs.readFileSync(value);
         } catch (error) {
             this.logger.error(
-                'When using the -b, --body option please provide a valid .txt file containing the desired body of the email to send out; trying to parse the file the following error was encountered:',
-                error,
-                error.code,
+                'When using the -b, --body option please provide a valid .txt file containing the desired body of the email to send out',
             );
+            this.logger.debug(error.stack);
             process.exit(1);
         }
 
@@ -71,27 +69,17 @@ export class SendEmailsCommand extends CommandRunner {
         const mapEmailAddressesToRoomIds = this.readEmailsAndRoomIdsFromFile(options.file);
         const emailBody = this.getEmailBody(options.body);
 
-        const {
-            baseUrl,
-            emailFrom,
-            emailSubject,
-            smtpHost,
-            smtpPort,
-            smtpUser,
-            smtpPassword,
-            matrixHomeserver,
-            matrixAccessToken,
-            matrixUserId,
-        } = await this.inquirerService.ask('send-emails', undefined);
+        // Create reusable transporter object using nodemailer
+        const emailTransporter = await this.createMessageTransporter();
+
+        const { baseUrl, emailFrom, emailSubject, matrixHomeserver, matrixAccessToken, matrixUserId } =
+            await this.inquirerService.ask('send-emails', undefined);
 
         // Confirm that the email body looks fine
         this.logger.log(`\n---------------------\n${emailBody}\n---------------------`);
         if (!(await confirm({ message: 'Does the email body above good to you?' }))) {
             process.exit(1);
         }
-
-        // Create reusable transporter object using the default SMTP transport
-        const emailTransporter = this.createEmailTransporter(smtpHost, smtpPort, smtpUser, smtpPassword);
 
         // Start the Matrix client and wait for it to be ready (akin finalized the initial sync)
         await this.matrixService.startClient(matrixHomeserver, matrixUserId, matrixAccessToken);
@@ -148,15 +136,17 @@ export class SendEmailsCommand extends CommandRunner {
         });
     }
 
-    createEmailTransporter(smtpHost, smtpPort, smtpUser, smtpPassword) {
-        return nodemailer.createTransport({
-            host: smtpHost,
-            port: smtpPort,
-            auth: {
-                user: smtpUser,
-                pass: smtpPassword,
-            },
-        });
+    async createMessageTransporter() {
+        try {
+            const transporter = nodemailer.createTransport(this.configService.get('nodemailer'));
+            await transporter.verify();
+            this.logger.log('Verified nodemailer transport connection');
+            return transporter;
+        } catch (error) {
+            this.logger.error('Could not create nodemailer transport; please check your configuration');
+            this.logger.debug(error.stack);
+            process.exit(1);
+        }
     }
 
     getEmailBody(optionalFilePath) {
