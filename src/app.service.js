@@ -1,4 +1,4 @@
-import { Dependencies, Injectable } from '@nestjs/common';
+import { ConsoleLogger, Dependencies, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as matrixcs from 'matrix-js-sdk';
 import { decrypt, PrivateKey } from 'eciesjs';
@@ -12,6 +12,8 @@ export class AppService {
     constructor(configService, matrixAppService) {
         this.configService = configService;
         this.matrixService = matrixAppService;
+
+        this.logger = new ConsoleLogger(AppService.name);
     }
 
     async onModuleInit() {
@@ -69,6 +71,8 @@ export class AppService {
             password: password,
         });
 
+        this.logger.debug(`Successfully authenticated as ${username}`);
+
         // Bot invites user
         for (const onboardingEvent of invitations) {
             try {
@@ -97,5 +101,7 @@ export class AppService {
         for (const onboardingEvent of invitations) {
             await this.matrixService.makeUserModerator(userMatrixLogin.user_id, onboardingEvent.getRoomId());
         }
+
+        this.logger.log(`Accepted ${_.size(invitations)} invitation(s) for ${username}`);
     }
 }
