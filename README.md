@@ -25,7 +25,19 @@ Requires a Matrix user (can be a bot) that is able to
 
 ## Configuration
 
-Copy `config.example.js` to `config.js`.
+Copy `config.example.js` to `config.js`. Check the file's comments for more details.
+
+<br>
+
+## Running
+
+```bash
+npm start
+```
+
+You can make use the following environment variables to adjust your deployment:
+- `PORT` Which port the service should run on (default: `3000`)
+- `GLOBAL_PREFIX` If you are running the service in a certain subdirectory, e.g. behind a reverse-proxy (default: `/`)
 
 <br>
 
