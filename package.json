@@ -1,7 +1,7 @@
 {
   "name": "matrix-email-onboarding",
   "version": "1.0.0",
-  "description": "Microservice to invite moderators to Matrix rooms (or spaces) via their email addresses, even before they might have a Matrix account",
+  "description": "Microservice to onboard users to Matrix rooms (or spaces) via their email addresses, even before they might have a Matrix account",
   "license": "CC0-1.0",
   "scripts": {
     "start": "babel-node index.js",

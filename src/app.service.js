@@ -77,7 +77,7 @@ export class AppService {
         for (const onboardingEvent of invitations) {
             try {
                 await this.matrixService.inviteUser(userMatrixLogin.user_id, onboardingEvent.getRoomId());
-            } catch (/** {MatrixError} error */ error) {
+            } catch (/** MatrixError */ error) {
                 // Ignore errors if the user is part of the room already
                 if (!_.includes(_.get(error, 'data.error'), 'is already in the room')) {
                     throw error;
@@ -89,7 +89,7 @@ export class AppService {
         for (const onboardingEvent of invitations) {
             try {
                 await userMatrixClient.joinRoom(onboardingEvent.getRoomId());
-            } catch (/** {MatrixError} error */ error) {
+            } catch (/** MatrixError */ error) {
                 // Ignore errors if the user is part of the room already
                 if (!_.includes(_.get(error, 'data.error'), 'is already in the room')) {
                     throw error;
@@ -97,9 +97,15 @@ export class AppService {
             }
         }
 
-        // Bot makes the user a moderator
-        for (const onboardingEvent of invitations) {
-            await this.matrixService.makeUserModerator(userMatrixLogin.user_id, onboardingEvent.getRoomId());
+        // If configured, have the bot alter the power level of the user
+        if (this.configService.get('matrix.powerlevel')) {
+            for (const onboardingEvent of invitations) {
+                await this.matrixService.setUserPowerLevel(
+                    userMatrixLogin.user_id,
+                    onboardingEvent.getRoomId(),
+                    this.configService.get('matrix.powerlevel'),
+                );
+            }
         }
 
         this.logger.log(`Accepted ${_.size(invitations)} invitation(s) for ${username}`);

@@ -20,8 +20,13 @@ export default () => ({
     },
     matrix: {
         homeserver_base_url: 'https://matrix.org',
-        // This user should be at least moderator for all Matrix rooms/spaces that users are being invited to
+        // This user should have read + write access for all Matrix rooms/spaces that users are being invited to
         user_id: '@bbot:matrix.org',
         access_token: 'syt_cnVuZGd...',
+        // The powerlevel to promote users to after they automatically joined; make sure that the user above has
+        // at least this powerlevel (or higher) for all Matrix rooms/spaces that users are being invited to.
+        // You can remove this line or leave it at 0 to not modify the power level at all.
+        // More details on power levels can be found here: https://matrix.org/docs/communities/moderation/
+        powerlevel: 0,
     },
 });

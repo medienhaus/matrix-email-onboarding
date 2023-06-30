@@ -7,19 +7,19 @@
 
 # matrix-email-onboarding
 
-A microservice to invite moderators to Matrix rooms (or spaces) via their email addresses, even before they might have a Matrix account.
+A microservice to invite users to Matrix rooms (or spaces) via their email addresses, even before they might have a Matrix account.
 
-Have a list of email addresses and Matrix rooms (or spaces) you wish to invite them to? Don't know their Matrix usernames or if they even have a Matrix account yet? This is for you.
+Do you have a list of email addresses and Matrix rooms (or spaces) which you wish to invite them to? And you don't know their Matrix usernames or if they even have a Matrix account yet? This is for you. ✨
 
-- Comes with a CLI tool to send out emails 📨 containing invitation links
+- Comes with a CLI tool to send out emails 📨 with a link (containing a secret token) for your user to click on
 - Node.js server-side application to handle web requests to
-  - (1) check for pending invitations 🔍 for a given onboarding code
-  - (2) accept invitations ☑️ and join the given rooms/spaces
-  - (3) promote newly joined users to become moderators 🧑‍⚖️
+  - (1) check a given secret onboarding token 🔍 and list the linked Matrix rooms or spaces
+  - (2) let the user sign in ☑️ with their Matrix account and automatically join the given rooms or spaces
+  - (3) (optionally) promote those newly joined users to become moderators or administrators 🧑‍⚖️
 
-Requires a Matrix user (can be a bot) that is able to
-1. access and send `dev.medienhaus.onboarding` events for all rooms that you want to invite users to, and
-2. has a power level `>= 50` for all of those Matrix rooms to be able to promote invited users to be moderators.
+The only requirement for this is a Matrix user (or a bot) that
+1. has the ability to access and send `dev.medienhaus.onboarding` events for all rooms that you want to invite users to, and
+2. (optionally) has a power level at least as high as what you're trying to promote users to. (e.g. needs to be at least a moderator, if you want to make everyone a moderator)
 
 <br>
 
