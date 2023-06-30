@@ -31,6 +31,8 @@ Copy `config.example.js` to `config.js`. Check the file's comments for more deta
 
 ## Running
 
+As a first, run `npm install` to install all the required dependencies.
+
 ```bash
 npm start
 ```
