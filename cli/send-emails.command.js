@@ -13,7 +13,7 @@ import { MatrixService } from '../lib/matrix.service';
 
 @Command({
     name: 'send-emails',
-    description: 'Send out invitations via email',
+    description: 'Send out onboarding links via email',
 })
 @Dependencies(ConfigService, MatrixService, InquirerService)
 export class SendEmailsCommand extends CommandRunner {
