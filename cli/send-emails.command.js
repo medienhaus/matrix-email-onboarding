@@ -149,6 +149,14 @@ export class SendEmailsCommand extends CommandRunner {
             // Sleep after every email
             await new Promise((x) => setTimeout(x, sleepBetweenEmailSends));
         }
+
+        this.matrixService.stopClient();
+
+        this.logger.log('Done; sent out all emails.');
+        // @TODO Wait for https://github.com/matrix-org/matrix-js-sdk/issues/2472 to be fixed to remove this notice.
+        this.logger.log(
+            '--- Due to a bug with matrix-js-sdk this process will not terminate itself. Feel free to end it manually. ---',
+        );
     }
 
     async createMessageTransporter() {
