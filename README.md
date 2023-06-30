@@ -23,6 +23,14 @@ The only requirement for this is a Matrix user (or a bot) that
 
 <br>
 
+## Screenshots
+
+| Log in form      | Confirmation page |
+| ---------------- | ----------------- |
+| ![Screenshot 2023-06-30 at 15-51-10 matrix-email-onboarding](https://github.com/medienhaus/matrix-email-onboarding/assets/706419/547d3542-3bfc-4a50-9854-53f075fcce7a) | ![Screenshot 2023-06-30 at 15-50-58 matrix-email-onboarding](https://github.com/medienhaus/matrix-email-onboarding/assets/706419/a60dce35-d76a-4d4a-b3af-9d670b0c359a) |
+
+<br>
+
 ## Configuration
 
 Copy `config.example.js` to `config.js`. Check the file's comments for more details.
